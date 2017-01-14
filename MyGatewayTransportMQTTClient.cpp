@@ -48,8 +48,8 @@ static bool _MQTT_connecting = true;
 static bool _MQTT_available = false;
 static MyMessage _MQTT_msg;
 
-#ifndef MQTT_RETAINED
-#define MQTT_RETAINED false
+#ifndef MY_MQTT_RETAINED
+#define MY_MQTT_RETAINED false
 #endif
 
 bool gatewayTransportSend(MyMessage &message)
@@ -60,7 +60,7 @@ bool gatewayTransportSend(MyMessage &message)
   setIndication(INDICATION_GW_TX);
   char *topic = protocolFormatMQTTTopic(MY_MQTT_PUBLISH_TOPIC_PREFIX, message);
   debug(PSTR("Sending message on topic: %s\n"), topic);
-  return _MQTT_client.publish(topic, message.getString(_convBuffer), MQTT_RETAINED);
+  return _MQTT_client.publish(topic, message.getString(_convBuffer), MY_MQTT_RETAINED);
 }
 
 void incomingMQTT(char* topic, uint8_t* payload, unsigned int length)
